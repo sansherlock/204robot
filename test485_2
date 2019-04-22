@@ -1,0 +1,23 @@
+;不断返回给PC数值
+sid = 0
+;port_num :  1 : debug port, 2 : rs232 port, 3 : rs485 port, 4 : rs232 port
+port_num = 3
+baudrate = 9600
+databit = 8
+stopbit = 1
+paritybit = 0
+ret_flag = 2
+$strvalue = '11'
+
+SOpen sid, port_num, baudrate , databit , stopbit , paritybit , ret_flag
+IF ret_flag < 0 THEN
+    TPWrite 0, "Serial Open Error"
+END
+While TRUE Do
+    WaitTime 1
+    SWrite sid, $strvalue, ret_flag ;write data
+    IF ret_flag < 0 THEN
+        goto 10
+    END
+END
+10
